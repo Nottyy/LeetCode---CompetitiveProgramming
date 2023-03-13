@@ -12,7 +12,7 @@ namespace _5.LongestPalindromicSubstring
         static void Main(string[] args)
         {
             //Console.WriteLine("asd".Reverse().ToString());
-            Console.WriteLine(LongestPalindrome("cbbd"));
+            Console.WriteLine(LongestPalindrome("weabcdcbwerfjf"));
         }
 
         public static string LongestPalindrome(string s)
