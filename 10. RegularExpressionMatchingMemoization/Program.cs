@@ -15,13 +15,13 @@ namespace _10.RegularExpressionMatchingMemoization
 
         public static bool IsMatch(string s, string p)
         {
-            var cache = new Dictionary<Cache, bool>();
+            var cache = new Dictionary<Tuple<int,int>, bool>();
             return DFS(s, p, 0, 0, cache);
         }
 
-        private static bool DFS(string s, string p, int i, int j, Dictionary<Cache, bool> cache)
+        private static bool DFS(string s, string p, int i, int j, Dictionary<Tuple<int,int>, bool> cache)
         {
-            var cur = new Cache(i, j);
+            var cur = new Tuple<int,int>(i, j);
             if (cache.ContainsKey(cur))
             {
                 return cache[cur];
@@ -45,14 +45,14 @@ namespace _10.RegularExpressionMatchingMemoization
                 var checkWithKeepingTheStar = match && DFS(s, p, i + 1, j, cache);
 
                 var result = checkWithRemovingTheStar || checkWithKeepingTheStar;
-                var key = new Cache(i, j);
+                var key = new Tuple<int,int>(i, j);
 
                 cache[key] = result;
 
                 return cache[key];
             }
 
-            var curCache = new Cache(i, j);
+            var curCache = new Tuple<int,int>(i, j);
 
             if (match)
             {
@@ -62,29 +62,6 @@ namespace _10.RegularExpressionMatchingMemoization
 
             cache[curCache] = false;
             return cache[curCache];
-        }
-
-        public class Cache
-        {
-            public Cache(int x, int y)
-            {
-                this.X = x;
-                this.Y = y;
-            }
-
-            public int X { get; set; }
-            public int Y { get; set; }
-
-            public override bool Equals(object obj)
-            {
-                var other = obj as Cache;
-                return this.X == other.X && this.Y == other.Y;
-            }
-
-            public override int GetHashCode()
-            {
-                return this.X.GetHashCode() + this.Y.GetHashCode();
-            }
         }
     }
 }
