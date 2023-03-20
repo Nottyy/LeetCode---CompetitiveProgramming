@@ -10,7 +10,7 @@ namespace _15._3SumWithTwoPointers
     {
         static void Main(string[] args)
         {
-            var res = ThreeSum(new int[] { -1, 0, 1, 2, -1, -4 });
+            var res = ThreeSum(new int[] { -1, 1, 0, 0 });
 
             foreach (var item in res)
             {
@@ -20,11 +20,16 @@ namespace _15._3SumWithTwoPointers
 
         public static IList<IList<int>> ThreeSum(int[] nums)
         {
-            var hash = new HashSet<Tuple<int, int, int>>();
+            // var hash = new HashSet<Tuple<int, int, int>>();
+            var hash = new List<IList<int>>();
             var sortedNums = nums.OrderBy(x => x).ToArray();
 
             for (int p = 0; p < sortedNums.Length; p++)
             {
+                if (p > 0 && sortedNums[p - 1] == sortedNums[p])
+                {
+                    continue;
+                }
                 var l = p + 1;
                 var r = sortedNums.Length - 1;
                 var target = sortedNums[p] * -1;
@@ -38,28 +43,24 @@ namespace _15._3SumWithTwoPointers
                     {
                         r--;
                     }
-                    else if (leftNum +rightNum < target)
+                    else if (leftNum + rightNum < target)
                     {
                         l++;
                     }
                     else
                     {
-                        var arr = new int[] { sortedNums[p], leftNum, rightNum }.OrderBy(x => x).ToArray();
-                        var s = new Tuple<int, int, int>(arr[0], arr[1], arr[2]);
-                        hash.Add(s);
+                        hash.Add(new List<int> { sortedNums[p], leftNum, rightNum });
                         l++;
-                        r--;
+                        while (sortedNums[l] == sortedNums[l - 1] && l < r)
+                        {
+                            l++;
+                        }
                     }
                 }
 
             }
-            var list = new List<IList<int>>();
-            foreach (var item in hash)
-            {
-                list.Add(new List<int> { item.Item1, item.Item2, item.Item3 });
-            }
 
-            return list;
+            return hash;
         }
     }
 }
