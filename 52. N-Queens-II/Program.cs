@@ -17,13 +17,20 @@ namespace _51.N_Queens
         public static int TotalNQueens(int n)
         {
             var matrix = new bool[n, n];
-            var solutions = PlaceQueen(matrix, 0);
+
+            var cols = new HashSet<int>();
+            var posDiagonals = new HashSet<int>();
+            var negDiagonals = new HashSet<int>();
+
+            var solutions = PlaceQueen(matrix, 0, cols, posDiagonals, negDiagonals);
 
             return solutions;
         }
 
-        private static int PlaceQueen(bool[,] matrix, int row)
+        private static int PlaceQueen(bool[,] matrix, int row, HashSet<int> cols, 
+            HashSet<int> posDiagonals, HashSet<int> negDiagonals)
         {
+
             if (row == matrix.GetLength(0))
             {
                 return 1;
@@ -33,12 +40,23 @@ namespace _51.N_Queens
 
             for (int col = 0; col < matrix.GetLength(1); col++)
             {
-                var checkForCollisions = CheckForCollisions(matrix, row, col);
+                var checkForCollisions = cols.Contains(col) || posDiagonals.Contains(row + col) ||
+                    negDiagonals.Contains(row - col);
 
                 if (checkForCollisions == false)
                 {
                     matrix[row, col] = true;
-                    result += PlaceQueen(matrix, row + 1);
+
+                    cols.Add(col);
+                    posDiagonals.Add(row + col);
+                    negDiagonals.Add(row - col);
+
+                    result += PlaceQueen(matrix, row + 1, cols, posDiagonals, negDiagonals);
+
+                    cols.Remove(col);
+                    posDiagonals.Remove(row + col);
+                    negDiagonals.Remove(row - col);
+
                     matrix[row, col] = false;
                 }
             }
