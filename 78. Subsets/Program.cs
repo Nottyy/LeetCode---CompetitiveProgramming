@@ -10,7 +10,7 @@ namespace _78.Subsets
     {
         static void Main(string[] args)
         {
-            var res = Subsets(new int[] { 0 });
+            var res = Subsets(new int[] { 1, 2, 3 });
 
             foreach (var list in res)
             {
@@ -31,15 +31,14 @@ namespace _78.Subsets
 
             for (int i = 0; i < nums.Length; i++)
             {
-                BackTracking(nums, result, i, i, new List<int>());
+                BackTracking(nums, result, i, new List<int>());
             }
-
 
             return result;
         }
 
         public static void BackTracking(int[] nums, List<IList<int>> result,
-            int index, int startIndex, List<int> cur)
+            int index, List<int> cur)
         {
             if (nums.Length == index)
             {
@@ -54,7 +53,7 @@ namespace _78.Subsets
                 if (j + 1 < nums.Length)
                 {
                     var arr = new List<int>(cur);
-                    BackTracking(nums, result, j + 1, startIndex, arr);
+                    BackTracking(nums, result, j + 1, arr);
                 }
             }
         }
