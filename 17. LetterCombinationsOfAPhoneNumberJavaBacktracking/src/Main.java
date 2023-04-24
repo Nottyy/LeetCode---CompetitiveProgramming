@@ -28,16 +28,16 @@ public class Main {
         return result;
     }
 
-    private static void Backtracking(String digits, ArrayList<String> result, HashMap<Integer, String> dict, int index, String curStr) {
-        if(curStr.length() >= digits.length()){
-            result.add(curStr);
+    private static void Backtracking(String digits, ArrayList<String> result, HashMap<Integer, String> dict, int index, String cStr) {
+        if(cStr.length() >= digits.length()){
+            result.add(cStr);
             return;
         }
 
         var curDigit = Character.getNumericValue(digits.charAt(index));
 
         for(var c: dict.get(curDigit).toCharArray()){
-            Backtracking(digits, result, dict, index + 1, curStr + c);
+            Backtracking(digits, result, dict, index + 1, cStr + c);
         }
     }
 }
