@@ -5,8 +5,8 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        var arr = partition("aabaa");
-        for(var el: arr){
+        var arr = partition("aaba");
+        for (var el : arr) {
             System.out.println(String.join(" ", el));
         }
     }
@@ -14,32 +14,29 @@ public class Main {
     public static List<List<String>> partition(String s) {
         List<List<String>> result = new ArrayList<>();
 
-        for (int i = 1; i <= s.length(); i++) {
-            DFS(s, result, new LinkedList<>(), s.substring(0, i), i);
-        }
+        DFS(s, result, new LinkedList<>(), 0);
         return result;
     }
 
     // aabac -> a,a,b,a,c - aa,b,a,c - a,aba,c
     // acba
     private static void DFS(String word, List<List<String>> result,
-                            LinkedList<String> curArr, String curStr, int index) {
-        if (PalindromeCheck(curStr)) {
-            curArr.add(curStr);
+                            LinkedList<String> curArr, int index) {
+        if (index >= word.length()) {
+            var res = new ArrayList<>(curArr);
+            result.add(res);
+            return;
+        }
 
-            if (index >= word.length()) {
-                var res = (LinkedList) curArr.clone();
-                result.add(res);
+        for (int i = 1; i <= word.length() - index; i++) {
+            var curStr = word.substring(index, index + i);
+
+            if (PalindromeCheck(curStr)) {
+
+                curArr.add(curStr);
+                DFS(word, result, curArr, index + i);
                 curArr.removeLast();
-                return;
             }
-            var length = word.length() - index;
-
-            for (int i = 1; i <= length; i++) {
-                DFS(word, result, curArr, word.substring(index, index + i), index + i);
-
-            }
-            curArr.removeLast();
         }
     }
 
