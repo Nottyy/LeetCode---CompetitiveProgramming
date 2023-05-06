@@ -1,31 +1,22 @@
 public class Main {
     public static void main(String[] args) {
-        var node1 = new TreeNode(10);
-        var node2 = new TreeNode(20);
-
-        node1.right = node2;
-        insertIntoBST(node1, 5);
-        var s = 4;
+        System.out.println("Hello world!");
     }
 
-    public static TreeNode insertIntoBST(TreeNode root, int val) {
-        if (root == null){
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+        if (root == null) {
             return new TreeNode(val);
         }
-
-        if (val > root.val){
-            if (root.right != null){
+        if (val > root.val) {
+            if (root.right != null) {
                 root.right = insertIntoBST(root.right, val);
-            }
-            else{
+            } else {
                 root.right = new TreeNode(val);
             }
-        }
-        else{
-            if (root.left != null){
+        } else {
+            if (root.left != null) {
                 root.left = insertIntoBST(root.left, val);
-            }
-            else{
+            } else {
                 root.left = new TreeNode(val);
             }
         }
@@ -33,7 +24,7 @@ public class Main {
         return root;
     }
 
-    public static class TreeNode {
+    public class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
